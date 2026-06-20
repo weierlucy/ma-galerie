@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Au Fil des Saisons</title>
-   
-       <style>
+    <style>
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -20,13 +19,12 @@
         
         .subtitle {
             text-align: center;
-            font-family: Georgia, 'Georgia, 'Times New Roman', serif;  /* 手写体或衬线字体 */
+            font-family: Georgia, serif;
             font-size: 1.4rem;
             color: rgba(255,255,255,0.8);
             margin-bottom: 40px;
         }
         
-        /* 画廊容器：让图片排成一行 */
         .gallery {
             display: flex;
             gap: 20px;
@@ -34,16 +32,15 @@
             flex-wrap: wrap;
         }
         
-        /* 每一张图片卡片 */
         .card {
-            background: white;
+            background:white;
             border-radius: 40px;
             padding: 15px;
-            width: 200px;
+            width: 150px;
             text-align: center;
             transition: transform 0.3s;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 80px;
+            margin-bottom: 40px;
         }
         
         .card:hover {
@@ -57,106 +54,62 @@
             border-radius: 15px;
         }
         
-        .card h3 {
-            margin: 15px 0 5px;
-            color: #333;
-        }
-        
         .card p {
             color: #666;
             font-size: 14px;
-        }
-        
-        .card a {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 8px 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 14px;
-            transition: opacity 0.3s;
-        }
-        
-        .card a:hover {
-            opacity: 0.8;
         }
     </style>
 </head>
 <body>
 
     <h1>Au Fil des Saisons</h1>
-    <div class="subtitle">Carnet de jardin, de cuisine et de lumière<br> par Lucy</div>
+    <div class="subtitle">Carnet de jardin, de cuisine et de lumière<br>par Lucy</div>
     
-    <div class="gallery">
-        
-        <!-- 卡片 1 -->
-<div class="card">
-    <a href="photo1.jpg" target="_blank">
-        <img src="photo1.jpg" alt="图片1">
-    </a>
+    <!-- 容器：JavaScript 会把卡片生成到这里 -->
+    <div id="galleryContainer" class="gallery"></div>
 
-    <p>这是我喜欢做的红烧排骨。</p>
+    <!-- ========== JavaScript 从这里开始 ========== -->
+    <script>
+        // 图片数组
+        let photos = [
+            { src: "photo1.jpg", alt: "红烧排骨", desc: "28.Mai.2026" },
+            { src: "photo2.jpg", alt: "Sardins en conserve", desc: "Sardins en conserve" },
+            { src: "photo3.jpg", alt: "16.Juin.2026", desc: "16.Juin.2026" },
+            { src: "photo4.jpg", alt: "二十一周年", desc: "二十一周年 18 Juin 2026" },
+            { src: "photo5.jpg", alt: "香菜", desc: "18 Juin 2026" },
+            { src: "photo6.jpg", alt: "西葫芦", desc: "17 Juin 2026" },
+            { src: "photo7.jpg", alt: "西葫芦", desc: "20 Juin 2026" },
+            { src: "photo8.jpg", alt: "西葫芦", desc: "20 Juin 2026" }
+
+
+
+     
+         
+           
+        ];
+
+     
+     
+        // 用循环生成所有卡片
+        function renderGallery() {
+            let html = "";
+            for (let i = 0; i < photos.length; i++) {
+                let p = photos[i];
+                html = html + `
+                    <div class="card">
+                        <a href="${p.src}" target="_blank">
+                            <img src="${p.src}" alt="${p.alt}">
+                        </a>
+                        <p>${p.desc}</p>
+                    </div>
+                `;
+            }
+            document.getElementById("galleryContainer").innerHTML = html;
+        }
+                       
+        // 页面加载时自动生成
+        renderGallery();
+    </script>
     
-</div>
-
-<!-- 卡片 2 -->
-<div class="card">
-    <a href="photo2.jpg" target="_blank">
-        <img src="photo2.jpg" alt="图片2">
-    </a>
-  
-    <p>sardines en conserve </p>
-    
-</div>
-
-<!-- 卡片 3 -->
-<div class="card">
-    <a href="photo3.jpg" target="_blank">
-        <img src="photo3.jpg" alt="图片3">
-    </a>
-  
-    <p>西葫芦炒鸡肉</p>
-    </div>        </div>
-        
-    </div>
-<div class="gallery">
-        
-        <!-- 卡片 4 -->
-<div class="card">
-    <a href="photo4.jpg" target="_blank">
-        <img src="photo4.jpg" alt="图片1">
-    </a>
-
-    <p>potages et rosiers </p>
-    
-</div>
-
-<!-- 卡片 5 -->
-<div class="card">
-    <a href="photo5.jpg" target="_blank">
-        <img src="photo5.jpg" alt="图片2">
-    </a>
-  
-    <p>今天摘的香菜 18 Juin 2026</p>
-    
-</div>
-
-<!-- 卡片 6 -->
-<div class="card">
-    <a href="photo6.jpg" target="_blank">
-        <img src="photo6.jpg" alt="图片3">
-    </a>
-  
-    <p>第一次采摘西葫芦 17 Juin 2026</p>
-</div>        </div>
-
-   
-        
-    </div>
-
-
-
 </body>
-</html> 
+</html>
