@@ -57,7 +57,33 @@
         .card p {
             color: #666;
             font-size: 14px;
-        }
+}
+
+        .floating-icon {
+        position: fixed; 
+        bottom: 410px;
+        right: 620px;
+        width: 80px;
+        animation: float 4s ease-in-out infinite;
+        z-index: 999;
+}
+        /* 1. 定义动画：名字叫 "float" */
+@keyframes float {
+    0%   { transform: translateY(0px) rotate(0deg); }
+    50%  { transform: translateY(-10px) rotate(10deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* 2. 图标样式 + 动画 */
+.floating-icon {
+    width: 60px;              /* 图标宽度 */
+    height: auto;             /* 高度自动 */
+    animation: float 3s ease-in-out infinite;
+    display: block;
+    margin: 0 auto;           /* 居中 */
+}
+
+
     </style>
 </head>
 <body>
@@ -67,6 +93,7 @@
     
     <!-- 容器：JavaScript 会把卡片生成到这里 -->
     <div id="galleryContainer" class="gallery"></div>
+    <img src="icon.png" alt="小图标" class="floating-icon">
 
     <!-- ========== JavaScript 从这里开始 ========== -->
     <script>
