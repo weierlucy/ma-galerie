@@ -74,6 +74,70 @@
             display: inline-block;
             animation: floatAndSpin 4s ease-in-out infinite;
         }
+ /* ---------- 1.5 弹窗 ---------- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: white;
+    border-radius: 30px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    animation: modalIn 0.3s ease-out;
+}
+
+.modal img {
+    width: 100%;
+    max-height: 70vh;   /* 最高不超过屏幕高度的 70% */
+    object-fit: contain; /* 关键：让图片完整显示，不裁剪 */
+    border-radius: 20px;
+    background: #f0f0f0;  /* 留白区域显示浅灰色 */
+}
+}
+.modal p {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 20px 0 0;
+    line-height: 1.6;
+}
+
+.modal .close-btn {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.modal .close-btn:hover {
+    transform: scale(1.05);
+}
+
+@keyframes modalIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 
         /* ---------- 1.5 动画 ---------- */
         @keyframes floatAndSpin {
@@ -97,6 +161,16 @@
     </div>
 
     <div id="galleryContainer" class="gallery"></div>
+<!-- ============================================================
+     弹窗
+     ============================================================ -->
+    <div class="overlay" id="overlay" onclick="closeModalOutside(event)">
+    <div class="modal" id="modal">
+        <img id="modalImage" src="" alt="">
+        <p id="modalDetail"></p>
+        <button class="close-btn" onclick="closeModal()">关闭</button>
+    </div>
+</div>
 
     <!-- ============================================================
          3. JavaScript
@@ -104,34 +178,52 @@
     <script>
         // ---------- 3.1 数据 ----------
         let photos = [
-            { src: "photo1.jpg", alt: "红烧排骨", desc: "28.Mai.2026" },
-            { src: "photo2.jpg", alt: "Sardins en conserve", desc: "Sardins en conserve" },
-            { src: "photo3.jpg", alt: "16.Juin.2026", desc: "16.Juin.2026" },
-            { src: "photo4.jpg", alt: "二十一周年", desc: "二十一周年 18 Juin 2026" },
-            { src: "photo5.jpg", alt: "香菜", desc: "18 Juin 2026" },
-            { src: "photo6.jpg", alt: "西葫芦", desc: "17 Juin 2026" },
-            { src: "photo7.jpg", alt: "西葫芦", desc: "20 Juin 2026" },
-            { src: "photo8.jpg", alt: "西葫芦", desc: "20 Juin 2026" }
+            { src: "photo1.jpg", alt: "红烧排骨", desc: "28.Mai.2026",detail: "第一次尝试用冰糖炒糖色，火候刚刚好，排骨色泽红亮。"  },
+            { src: "photo2.jpg", alt: "Sardins en conserve", desc: "Sardins en conserve",detail: "鱼罐头"  },
+            { src: "photo3.jpg", alt: "16.Juin.2026", desc: "16.Juin.2026",detail: "西葫芦炒鸡肉。"  },
+            { src: "photo4.jpg", alt: "二十一周年", desc: "二十一周年 18 Juin 2026" ,detail: "继续前行。" },
+            { src: "photo5.jpg", alt: "香菜", desc: "18 Juin 2026",detail: "香菜。"  },
+            { src: "photo6.jpg", alt: "西葫芦", desc: "17 Juin 2026",detail: "西葫芦。"  },
+            { src: "photo7.jpg", alt: "西葫芦", desc: "20 Juin 2026" ,detail: "长势满意。" },
+            { src: "photo8.jpg", alt: "西葫芦", desc: "20 Juin 2026",detail: "立体种植。"  }
         ];
 
-        // ---------- 3.2 渲染 ----------
-        function renderGallery() {
-            let html = "";
-            for (let i = 0; i < photos.length; i++) {
-                let p = photos[i];
-                html += `
-                    <div class="card">
-                        <a href="${p.src}" target="_blank">
-                            <img src="${p.src}" alt="${p.alt}">
-                        </a>
-                        <p>${p.desc}</p>
-                    </div>
-                `;
-            }
-            document.getElementById("galleryContainer").innerHTML = html;
-        }
+       // ---------- 3.2 渲染 ----------
+function renderGallery() {
+    let html = "";
+    for (let i = 0; i < photos.length; i++) {
+        let p = photos[i];
+        html += `
+            <div class="card">
+                <img src="${p.src}" alt="${p.alt}" onclick="openModal(${i})" style="cursor:pointer;">
+                <p>${p.desc}</p>
+            </div>
+        `;
+    }
+    document.getElementById("galleryContainer").innerHTML = html;
+}
 
-        renderGallery();
+renderGallery();
+
+// ---------- 3.3 弹窗 ----------
+function openModal(index) {
+    let p = photos[index];
+    document.getElementById("modalImage").src = p.src;
+    document.getElementById("modalDetail").textContent = p.detail;
+    document.getElementById("overlay").classList.add("active");
+    document.body.style.overflow = "hidden"; // 禁止背景滚动
+}
+
+function closeModal() {
+    document.getElementById("overlay").classList.remove("active");
+    document.body.style.overflow = "auto";
+}
+
+function closeModalOutside(event) {
+    if (event.target === document.getElementById("overlay")) {
+        closeModal();
+    }
+}
     </script>
 
 </body>
