@@ -33,7 +33,7 @@
         }
         
         .card {
-            background:white;
+            background: white;
             border-radius: 40px;
             padding: 15px;
             width: 150px;
@@ -57,58 +57,36 @@
         .card p {
             color: #666;
             font-size: 14px;
-}
+        }
 
-       /* 默认：电脑 */
-.floating-icon {
-    position: fixed;
-    bottom: 410px;
-    right: 620px;
-    width: 80px;
-    animation: float 4s ease-in-out infinite;
-    z-index: 999;
-}
+        /* ========== 副标题里的小花 ========== */
+        .inline-icon {
+            width: 40px;
+            vertical-align: middle;
+            margin-left: 10px;
+            display: inline-block;
+            animation: floatAndSpin 4s ease-in-out infinite;
+        }
 
-/* 手机屏幕（宽度小于 768px） */
-@media (max-width: 768px) {
-    .floating-icon {
-        bottom: 20px;    /* 手机：靠近底部 */
-        right: 20px;     /* 手机：靠近右侧 */
-        width: 50px;     /* 手机：小一点 */
-    }
-}        
-
-      /* 1. 定义动画：名字叫 "float" */
-@keyframes float {
-    0%   { transform: translateY(0px) rotate(0deg); }
-    50%  { transform: translateY(-10px) rotate(10deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-}
-
-/* 2. 图标样式 + 动画 */
-.floating-icon {
-    width: 60px;              /* 图标宽度 */
-    height: auto;             /* 高度自动 */
-    animation: float 3s ease-in-out infinite;
-    display: block;
-    margin: 0 auto;           /* 居中 */
-}
-
-
+        /* ========== 动画定义 ========== */
+        @keyframes floatAndSpin {
+            0%   { transform: translateY(0px) rotate(0deg); }
+            50%  { transform: translateY(-15px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
     </style>
 </head>
 <body>
 
     <h1>Au Fil des Saisons</h1>
-    <div class="subtitle">Carnet de jardin, de cuisine et de lumière<br>par Lucy</div>
+    <div class="subtitle">
+        Carnet de jardin, de cuisine et de lumière<br>par Lucy
+        <img src="icon.png" alt="小图标" class="inline-icon">
+    </div>
     
-    <!-- 容器：JavaScript 会把卡片生成到这里 -->
     <div id="galleryContainer" class="gallery"></div>
-    <img src="icon.png" alt="小图标" class="floating-icon">
 
-    <!-- ========== JavaScript 从这里开始 ========== -->
     <script>
-        // 图片数组
         let photos = [
             { src: "photo1.jpg", alt: "红烧排骨", desc: "28.Mai.2026" },
             { src: "photo2.jpg", alt: "Sardins en conserve", desc: "Sardins en conserve" },
@@ -118,17 +96,8 @@
             { src: "photo6.jpg", alt: "西葫芦", desc: "17 Juin 2026" },
             { src: "photo7.jpg", alt: "西葫芦", desc: "20 Juin 2026" },
             { src: "photo8.jpg", alt: "西葫芦", desc: "20 Juin 2026" }
-
-
-
-     
-         
-           
         ];
 
-     
-     
-        // 用循环生成所有卡片
         function renderGallery() {
             let html = "";
             for (let i = 0; i < photos.length; i++) {
@@ -144,8 +113,7 @@
             }
             document.getElementById("galleryContainer").innerHTML = html;
         }
-                       
-        // 页面加载时自动生成
+        
         renderGallery();
     </script>
     
