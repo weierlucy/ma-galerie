@@ -59,15 +59,26 @@
             font-size: 14px;
 }
 
-        .floating-icon {
-        position: fixed; 
-        bottom: 410px;
-        right: 620px;
-        width: 80px;
-        animation: float 4s ease-in-out infinite;
-        z-index: 999;
+       /* 默认：电脑 */
+.floating-icon {
+    position: fixed;
+    bottom: 410px;
+    right: 620px;
+    width: 80px;
+    animation: float 4s ease-in-out infinite;
+    z-index: 999;
 }
-        /* 1. 定义动画：名字叫 "float" */
+
+/* 手机屏幕（宽度小于 768px） */
+@media (max-width: 768px) {
+    .floating-icon {
+        bottom: 20px;    /* 手机：靠近底部 */
+        right: 20px;     /* 手机：靠近右侧 */
+        width: 50px;     /* 手机：小一点 */
+    }
+}        
+
+      /* 1. 定义动画：名字叫 "float" */
 @keyframes float {
     0%   { transform: translateY(0px) rotate(0deg); }
     50%  { transform: translateY(-10px) rotate(10deg); }
