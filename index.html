@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Au Fil des Saisons</title>
+    
+    <!-- ============================================================
+         1. CSS 样式
+         ============================================================ -->
     <style>
+        /* ---------- 1.1 全局重置 & 布局 ---------- */
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Segoe UI', Arial, sans-serif;
             padding: 40px;
         }
-        
+
+        .gallery {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ---------- 1.2 标题 ---------- */
         h1 {
             text-align: center;
             color: white;
             font-size: 2.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
-        
+
         .subtitle {
             text-align: center;
             font-family: Georgia, serif;
@@ -24,14 +37,8 @@
             color: rgba(255,255,255,0.8);
             margin-bottom: 40px;
         }
-        
-        .gallery {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
+
+        /* ---------- 1.3 卡片 ---------- */
         .card {
             background: white;
             border-radius: 40px;
@@ -42,24 +49,24 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             margin-bottom: 40px;
         }
-        
+
         .card:hover {
             transform: translateY(-10px);
         }
-        
+
         .card img {
             width: 100%;
             height: 180px;
             object-fit: cover;
             border-radius: 15px;
         }
-        
+
         .card p {
             color: #666;
             font-size: 14px;
         }
 
-        /* ========== 副标题里的小花 ========== */
+        /* ---------- 1.4 图标 ---------- */
         .inline-icon {
             width: 40px;
             vertical-align: middle;
@@ -68,7 +75,7 @@
             animation: floatAndSpin 4s ease-in-out infinite;
         }
 
-        /* ========== 动画定义 ========== */
+        /* ---------- 1.5 动画 ---------- */
         @keyframes floatAndSpin {
             0%   { transform: translateY(0px) rotate(0deg); }
             50%  { transform: translateY(-15px) rotate(10deg); }
@@ -76,17 +83,26 @@
         }
     </style>
 </head>
+
 <body>
 
+    <!-- ============================================================
+         2. HTML 内容
+         ============================================================ -->
     <h1>Au Fil des Saisons</h1>
+
     <div class="subtitle">
         Carnet de jardin, de cuisine et de lumière<br>par Lucy
         <img src="icon.png" alt="小图标" class="inline-icon">
     </div>
-    
+
     <div id="galleryContainer" class="gallery"></div>
 
+    <!-- ============================================================
+         3. JavaScript
+         ============================================================ -->
     <script>
+        // ---------- 3.1 数据 ----------
         let photos = [
             { src: "photo1.jpg", alt: "红烧排骨", desc: "28.Mai.2026" },
             { src: "photo2.jpg", alt: "Sardins en conserve", desc: "Sardins en conserve" },
@@ -98,11 +114,12 @@
             { src: "photo8.jpg", alt: "西葫芦", desc: "20 Juin 2026" }
         ];
 
+        // ---------- 3.2 渲染 ----------
         function renderGallery() {
             let html = "";
             for (let i = 0; i < photos.length; i++) {
                 let p = photos[i];
-                html = html + `
+                html += `
                     <div class="card">
                         <a href="${p.src}" target="_blank">
                             <img src="${p.src}" alt="${p.alt}">
@@ -113,9 +130,9 @@
             }
             document.getElementById("galleryContainer").innerHTML = html;
         }
-        
+
         renderGallery();
     </script>
-    
+
 </body>
 </html>
